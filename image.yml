@@ -8,9 +8,14 @@ summary: |-
 upstream:
   url: https://www.mamedev.org/
   version:
-    type: command
-    run: |-
-      curl -s -L https://ppa.launchpadcontent.net/c.falco/mame/ubuntu/dists/resolute/main/binary-amd64/Packages.gz | gunzip |grep -A 7 -m 1 'Package: mame' | awk -F ': ' '/Version/{print $2;exit}' | awk -F'ubuntu' '{print $1}' | sed 's/+//g'
+    type: deb_packages
+    index_url: https://ppa.launchpadcontent.net/c.falco/mame/ubuntu/dists/resolute/main/binary-amd64/Packages.gz
+    package: mame
+    transform:
+    - regex: ubuntu.*$
+      replace: ''
+    - regex: \+
+      replace: ''
 
 release:
   branch: master
